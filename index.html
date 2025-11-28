@@ -3,38 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>null_ | System Loading</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>NULL_ Protocol | Coming Soon - Join the Whitelist</title>
+    <meta name="description" content="NULL_ Protocol: Una nueva experiencia digital está por llegar. Únete a la whitelist y sé parte del lanzamiento exclusivo. Sistema terminal de próxima generación.">
+    <meta name="keywords" content="NULL Protocol, whitelist, coming soon, terminal, tech, digital, exclusivo, lanzamiento">
+    <meta name="author" content="NULL_ Protocol">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.null.uy">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.null.uy">
+    <meta property="og:title" content="NULL_ Protocol | Coming Soon">
+    <meta property="og:description" content="Una nueva experiencia digital está por llegar. Únete a la whitelist y sé parte del lanzamiento exclusivo.">
+    <meta property="og:image" content="https://www.null.uyog-image.jpg">
+    <meta property="og:locale" content="es_ES">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.null.uy">
+    <meta name="twitter:title" content="NULL_ Protocol | Coming Soon">
+    <meta name="twitter:description" content="Una nueva experiencia digital está por llegar. Únete a la whitelist y sé parte del lanzamiento exclusivo.">
+    <meta name="twitter:image" content="https://www.null.uyog-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/icon0.svg">
+    <link rel="apple-touch-icon" href="/apple-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+
+        :root {
+            --phosphor-green: #33ff00;
+            --phosphor-dim: #22aa00;
+            --bg-color: #000000;
+        }
+
         body {
-            background-color: #050505; /* Casi negro absoluto */
-            color: #e0e0e0; /* Blanco apagado, no quema los ojos */
-            font-family: 'Courier New', Courier, monospace; /* Fuente consola */
+            background-color: var(--bg-color);
+            color: var(--phosphor-green);
+            font-family: 'Fira Code', monospace;
+            overflow: hidden; /* Prevent scroll on load */
+            height: 100vh;
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        /* CRT Effects */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(51, 255, 0, 0.02) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 10s linear infinite;
+            pointer-events: none;
+        }
+
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            background: radial-gradient(circle, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
+            background-size: 4px 4px;
+            z-index: 20;
+            pointer-events: none;
         }
 
-        .terminal-container {
-            width: 90%;
-            max-width: 600px;
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
         }
 
-        #console-output {
-            white-space: pre-wrap; /* Mantiene saltos de línea */
-            line-height: 1.5;
-            font-size: 1.1rem;
+        /* Typewriter Cursor */
+        .cursor::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2rem;
-            background-color: #e0e0e0;
-            animation: blink 1s infinite;
-            vertical-align: middle;
+        /* Custom Inputs */
+        .terminal-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--phosphor-dim);
+            color: var(--phosphor-green);
+            font-family: 'Fira Code', monospace;
+            outline: none;
+            width: 100%;
+            text-transform: lowercase;
+        }
+        
+        .terminal-input:focus {
+            border-bottom: 2px solid var(--phosphor-green);
+            box-shadow: 0 4px 10px -5px var(--phosphor-green);
+        }
+
+        .terminal-btn {
+            border: 1px solid var(--phosphor-green);
+            color: var(--bg-color);
+            background: var(--phosphor-green);
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .terminal-btn:hover {
+            background: black;
+            color: var(--phosphor-green);
+            box-shadow: 0 0 10px var(--phosphor-green);
+            cursor: pointer;
+        }
+
+        /* Animations */
+        @keyframes scanline {
+            0% { bottom: 100%; }
+            100% { bottom: -100%; }
         }
 
         @keyframes blink {
@@ -42,73 +138,260 @@
             50% { opacity: 0; }
         }
 
-        a {
-            color: #fff;
-            text-decoration: underline;
-            font-weight: bold;
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            5% { opacity: 0.95; }
+            10% { opacity: 0.9; }
+            15% { opacity: 0.95; }
+            20% { opacity: 0.99; }
+            50% { opacity: 0.95; }
+            55% { opacity: 0.93; }
+            60% { opacity: 0.9; }
+            65% { opacity: 0.96; }
+            100% { opacity: 0.98; }
         }
-        
-        .highlight {
-            color: #00ff41; /* Verde terminal sutil para detalles */
+
+        .glitch-text:hover {
+            text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
         }
     </style>
-</head>
-<body>
 
-    <div class="terminal-container">
-        <div id="console-output"></div><span class="cursor"></span>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WS3Y9Q3SKK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WS3Y9Q3SKK');
+</script>
+</head>
+<body class="crt-flicker">
+
+    <!-- Visual Overlays -->
+    <div class="scanline"></div>
+    <div class="crt-overlay"></div>
+
+    <!-- Main Terminal Container -->
+    <div class="relative z-30 w-full max-w-2xl p-6 md:p-10 border border-[#33ff00]/30 bg-black/80 shadow-[0_0_20px_rgba(51,255,0,0.1)] rounded-sm min-h-[400px] flex flex-col">
+        
+        <!-- Header / Top Bar -->
+        <div class="flex justify-between text-xs mb-6 opacity-70 select-none">
+            <span>root@null-server:~#</span>
+            <span>SECURE CONNS: <span id="conn-status" class="text-red-500">OFFLINE</span></span>
+        </div>
+
+        <!-- Terminal Output Area -->
+        <div id="terminal-output" class="flex-grow space-y-2 text-sm md:text-base mb-8">
+            <!-- Dynamic content will be injected here via JS -->
+        </div>
+
+        <!-- Interactive Area (Hidden initially) -->
+        <div id="interactive-area" class="hidden opacity-0 transition-opacity duration-1000">
+            
+            <div class="border-t border-[#33ff00]/30 pt-6 mt-4">
+                <p class="mb-4 text-xs opacity-80">> EXECUTE_USER_ACTION:</p>
+                
+                <!-- Email Form -->
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="flex-grow relative">
+                        <span class="absolute left-0 top-2 text-[#33ff00]">></span>
+                        <input type="email" id="email-input" placeholder="enter_email_for_whitelist" class="terminal-input pl-6 py-2">
+                    </div>
+                    <button id="submit-btn" class="terminal-btn px-6 py-2 text-sm md:text-base">
+                        [ JOIN_WHITELIST ]
+                    </button>
+                </div>
+
+                <!-- Instagram Link -->
+                <div class="text-center md:text-left mt-8">
+                    <a href="https://instagram.com/null.clo" target="_blank" class="group inline-flex items-center gap-2 hover:text-white transition-colors">
+                        <span class="opacity-50 group-hover:opacity-100 transition-opacity">[LINK]</span>
+                        <span class="underline decoration-1 underline-offset-4 decoration-[#33ff00]/50 group-hover:decoration-[#33ff00]">Follow updates @null.clo</span>
+                        <span class="opacity-0 group-hover:opacity-100 transition-opacity"> <<</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <script>
-        // Aquí configuramos lo que va a escribir la consola
-        const lines = [
-            "> Initializing null_ protocol...",
-            "> Connecting to server mvd_01...",
-            "> Connection established.",
-            "> Loading assets...",
-            "> [████████░░░] 72%",
-            "> [███████████] 100%",
-            "> ERROR 404: CLOTHING NOT FOUND",
-            "> System Status: PRODUCTION_MODE",
-            "",
-            "> The collection is coming.",
-            "> Follow updates here: <a href='https://instagram.com/null.clo' target='_blank'>@null.clo</a>",
-            ""
-        ];
+    <!-- Audio Element for simple beep (Optional visual cue handled via code) -->
 
-        const outputDiv = document.getElementById('console-output');
-        let lineIndex = 0;
-        let charIndex = 0;
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "NULL_ Protocol",
+        "description": "Una nueva experiencia digital está por llegar. Únete a la whitelist.",
+        "url": "https://www.null.uy",
+        "inLanguage": "es",
+        "publisher": {
+            "@type": "Organization",
+            "name": "NULL_ Protocol",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.null.uyog-image.jpg"
+            },
+            "sameAs": [
+                "https://instagram.com/null.clo"
+            ]
+        }
+    }
+    </script>
 
-        function typeWriter() {
-            if (lineIndex < lines.length) {
-                const currentLine = lines[lineIndex];
-                
-                // Si la línea tiene HTML (el link), la inyectamos de una
-                if (currentLine.includes("<a")) {
-                    outputDiv.innerHTML += currentLine + "<br>";
-                    lineIndex++;
-                    setTimeout(typeWriter, 500); // Pausa pequeña tras el link
-                } else {
-                    // Efecto de tipeo carácter por carácter
-                    if (charIndex < currentLine.length) {
-                        outputDiv.innerHTML += currentLine.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeWriter, Math.random() * 50 + 30); // Velocidad variable realista
-                    } else {
-                        outputDiv.innerHTML += "<br>";
-                        lineIndex++;
-                        charIndex = 0;
-                        setTimeout(typeWriter, 300); // Pausa entre líneas
-                    }
-                }
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+
+        // 1. Firebase Configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyAmXBcBfwSf_KHaN4POILlMe9vzfExu-Lw",
+        authDomain: "null-uy.firebaseapp.com",
+        projectId: "null-uy",
+        storageBucket: "null-uy.firebasestorage.app",
+        messagingSenderId: "989555679052",
+        appId: "1:989555679052:web:cf1cce22d5d8a4b936f9e9",
+        measurementId: "G-DN8QC1L46N"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // 2. Auth for writing to DB
+        signInAnonymously(auth).then(() => {
+            console.log("Terminal Access Granted.");
+            document.getElementById('conn-status').innerText = "ONLINE";
+            document.getElementById('conn-status').classList.remove('text-red-500');
+            document.getElementById('conn-status').classList.add('text-[#33ff00]');
+        }).catch((error) => {
+            console.error("Connection Failed", error);
+        });
+
+        // 3. UI Logic - Typewriter Engine
+        const outputDiv = document.getElementById('terminal-output');
+        const interactiveArea = document.getElementById('interactive-area');
+        const emailInput = document.getElementById('email-input');
+        const submitBtn = document.getElementById('submit-btn');
+
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        // Function to create a new line with typewriter effect
+        async function typeLine(text, speed = 30, className = "") {
+            const p = document.createElement('div');
+            if (className) p.className = className;
+            p.classList.add('cursor'); // Add blinking cursor to current line
+            outputDiv.appendChild(p);
+
+            for (let i = 0; i < text.length; i++) {
+                p.textContent += text.charAt(i);
+                // Randomize speed slightly for realism
+                await sleep(speed + Math.random() * 20); 
+                // Auto scroll to bottom
+                outputDiv.scrollTop = outputDiv.scrollHeight;
             }
+
+            p.classList.remove('cursor'); // Remove cursor when done
+            return p;
         }
 
-        // Iniciar al cargar
-        window.onload = () => {
-            setTimeout(typeWriter, 1000);
-        };
+        // Function for Progress Bar
+        async function runProgressBar() {
+            const p = document.createElement('div');
+            outputDiv.appendChild(p);
+            const total = 20; // total blocks
+            
+            for (let i = 0; i <= 100; i+=5) {
+                const filled = Math.floor((i / 100) * total);
+                const empty = total - filled;
+                const bar = '█'.repeat(filled) + '░'.repeat(empty);
+                
+                p.textContent = `> Loading assets... [${bar}] ${i}%`;
+                await sleep(50);
+            }
+            return p;
+        }
+
+        // Main Sequence
+        async function runSequence() {
+            await sleep(500);
+            await typeLine("> Initializing NULL_ Protocol...", 40);
+            await sleep(300);
+            await typeLine("> Verifying encryption keys... OK", 10, "opacity-70 text-xs");
+            await typeLine("> Connecting to core... OK", 10, "opacity-70 text-xs");
+            await sleep(400);
+            await runProgressBar();
+            await sleep(600);
+            
+            // System Status big text
+            const statusLine = await typeLine("> System Status: COMING SOON", 50, "text-lg md:text-xl font-bold mt-4 shadow-green");
+            
+            await sleep(800);
+            
+            // Show interactive elements
+            interactiveArea.classList.remove('hidden');
+            // Trigger reflow
+            void interactiveArea.offsetWidth;
+            interactiveArea.classList.remove('opacity-0');
+            
+            // Focus on input
+            setTimeout(() => emailInput.focus(), 500);
+        }
+
+        // Start the show
+        runSequence();
+
+        // 4. Handle Email Submission
+        submitBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            if (!email || !email.includes('@')) {
+                await typeLine("> ERROR: Invalid email syntax.", 10, "text-red-500");
+                return;
+            }
+
+            // UI Feedback: Processing
+            emailInput.disabled = true;
+            submitBtn.textContent = "[ PROCESSING... ]";
+            
+            try {
+                // Ensure auth before writing
+                if(!auth.currentUser) await signInAnonymously(auth);
+
+                // Write to Firestore
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'whitelist'), {
+                    email: email,
+                    timestamp: serverTimestamp(),
+                    origin: 'landing_page_terminal'
+                });
+
+                // Success Message
+                await sleep(600);
+                await typeLine(`> SUCCESS: ${email} added to whitelist.`, 20);
+                await typeLine(`> ID_REF: ${Math.random().toString(36).substring(7).toUpperCase()}`, 10, "text-xs opacity-60");
+                
+                emailInput.value = "";
+                submitBtn.textContent = "[ REGISTERED ]";
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            } catch (err) {
+                console.error(err);
+                await typeLine("> CRITICAL_ERROR: Database handshake failed.", 20, "text-red-500");
+                submitBtn.textContent = "[ RETRY ]";
+                emailInput.disabled = false;
+            }
+        });
+
+        // Allow "Enter" key to submit
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitBtn.click();
+        });
+
     </script>
 </body>
 </html>
