@@ -50,12 +50,13 @@
             background-color: var(--bg-color);
             color: var(--phosphor-green);
             font-family: 'Fira Code', monospace;
-            overflow: hidden; /* Prevent scroll on load */
-            height: 100vh;
+            overflow-y: auto;
+            min-height: 100dvh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 1rem;
         }
 
         /* CRT Effects */
@@ -173,7 +174,7 @@
     <div class="crt-overlay"></div>
 
     <!-- Main Terminal Container -->
-    <div class="relative z-30 w-full max-w-2xl p-6 md:p-10 border border-[#33ff00]/30 bg-black/80 shadow-[0_0_20px_rgba(51,255,0,0.1)] rounded-sm min-h-[400px] flex flex-col">
+    <div class="relative z-30 w-full max-w-2xl p-4 md:p-10 border border-[#33ff00]/30 bg-black/80 shadow-[0_0_20px_rgba(51,255,0,0.1)] rounded-sm min-h-[350px] md:min-h-[400px] flex flex-col">
         
         <!-- Header / Top Bar -->
         <div class="flex justify-between text-xs mb-6 opacity-70 select-none">
@@ -196,7 +197,7 @@
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
                     <div class="flex-grow relative">
                         <span class="absolute left-0 top-2 text-[#33ff00]">></span>
-                        <input type="email" id="email-input" placeholder="enter_email_for_whitelist" class="terminal-input pl-6 py-2">
+                        <input type="email" id="email-input" placeholder="enter_email_for_whitelist" class="terminal-input pl-6 py-2 text-base">
                     </div>
                     <button id="submit-btn" class="terminal-btn px-6 py-2 text-sm md:text-base">
                         [ JOIN_WHITELIST ]
