@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>null_ | System Loading</title>
+    <style>
+        body {
+            background-color: #050505; /* Casi negro absoluto */
+            color: #e0e0e0; /* Blanco apagado, no quema los ojos */
+            font-family: 'Courier New', Courier, monospace; /* Fuente consola */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .terminal-container {
+            width: 90%;
+            max-width: 600px;
+        }
+
+        #console-output {
+            white-space: pre-wrap; /* Mantiene saltos de línea */
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: #e0e0e0;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        a {
+            color: #fff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            color: #00ff41; /* Verde terminal sutil para detalles */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-container">
+        <div id="console-output"></div><span class="cursor"></span>
+    </div>
+
+    <script>
+        // Aquí configuramos lo que va a escribir la consola
+        const lines = [
+            "> Initializing null_ protocol...",
+            "> Connecting to server mvd_01...",
+            "> Connection established.",
+            "> Loading assets...",
+            "> [████████░░░] 72%",
+            "> [███████████] 100%",
+            "> ERROR 404: CLOTHING NOT FOUND",
+            "> System Status: PRODUCTION_MODE",
+            "",
+            "> The collection is coming.",
+            "> Follow updates here: <a href='https://instagram.com/null.clo' target='_blank'>@null.clo</a>",
+            ""
+        ];
+
+        const outputDiv = document.getElementById('console-output');
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (lineIndex < lines.length) {
+                const currentLine = lines[lineIndex];
+                
+                // Si la línea tiene HTML (el link), la inyectamos de una
+                if (currentLine.includes("<a")) {
+                    outputDiv.innerHTML += currentLine + "<br>";
+                    lineIndex++;
+                    setTimeout(typeWriter, 500); // Pausa pequeña tras el link
+                } else {
+                    // Efecto de tipeo carácter por carácter
+                    if (charIndex < currentLine.length) {
+                        outputDiv.innerHTML += currentLine.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeWriter, Math.random() * 50 + 30); // Velocidad variable realista
+                    } else {
+                        outputDiv.innerHTML += "<br>";
+                        lineIndex++;
+                        charIndex = 0;
+                        setTimeout(typeWriter, 300); // Pausa entre líneas
+                    }
+                }
+            }
+        }
+
+        // Iniciar al cargar
+        window.onload = () => {
+            setTimeout(typeWriter, 1000);
+        };
+    </script>
+</body>
+</html>
