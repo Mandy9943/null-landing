@@ -191,16 +191,16 @@
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
                     <div class="flex-grow relative">
                         <span class="absolute left-0 top-2 text-[#33ff00]">></span>
-                        <input type="email" id="email-input" placeholder="enter_email_for_whitelist" class="terminal-input pl-6 py-2 text-base">
+                        <input type="email" id="email-input" placeholder="enter_email_for_whitelist" class="terminal-input pl-6 py-2 text-base" data-umami-event="Email input focus">
                     </div>
-                    <button id="submit-btn" class="terminal-btn px-6 py-2 text-sm md:text-base">
+                    <button id="submit-btn" class="terminal-btn px-6 py-2 text-sm md:text-base" data-umami-event="Whitelist button click">
                         [ JOIN_WHITELIST ]
                     </button>
                 </div>
 
                 <!-- Instagram Link -->
                 <div class="text-center md:text-left mt-8">
-                    <a href="https://instagram.com/null.clo" target="_blank" class="group inline-flex items-center gap-2 hover:text-white transition-colors">
+                    <a href="https://instagram.com/null.clo" target="_blank" class="group inline-flex items-center gap-2 hover:text-white transition-colors" data-umami-event="Instagram link click">
                         <span class="opacity-50 group-hover:opacity-100 transition-opacity">[LINK]</span>
                         <span class="underline decoration-1 underline-offset-4 decoration-[#33ff00]/50 group-hover:decoration-[#33ff00]">Follow updates @null.clo</span>
                         <span class="opacity-0 group-hover:opacity-100 transition-opacity"> <<</span>
@@ -347,6 +347,9 @@
             const email = emailInput.value.trim();
             if (!email || !email.includes('@')) {
                 await typeLine("> ERROR: Invalid email syntax.", 10, "text-red-500");
+                if (window.umami) {
+                    umami.track('Whitelist validation error', { error: 'invalid_email' });
+                }
                 return;
             }
 
@@ -370,6 +373,12 @@
                 await typeLine(`> SUCCESS: ${email} added to whitelist.`, 20);
                 await typeLine(`> ID_REF: ${Math.random().toString(36).substring(7).toUpperCase()}`, 10, "text-xs opacity-60");
                 
+                // Track successful submission
+                if (window.umami) {
+                    const emailDomain = email.split('@')[1];
+                    umami.track('Whitelist submission success', { domain: emailDomain });
+                }
+                
                 emailInput.value = "";
                 submitBtn.textContent = "[ REGISTERED ]";
                 submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -377,6 +386,12 @@
             } catch (err) {
                 console.error(err);
                 await typeLine("> CRITICAL_ERROR: Database handshake failed.", 20, "text-red-500");
+                
+                // Track database error
+                if (window.umami) {
+                    umami.track('Whitelist submission error', { error: 'database_failed' });
+                }
+                
                 submitBtn.textContent = "[ RETRY ]";
                 emailInput.disabled = false;
             }
